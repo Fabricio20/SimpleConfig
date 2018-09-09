@@ -25,6 +25,11 @@ public class BungeeConfigManager implements SimpleConfigManager {
     }
 
     @Override
+    public void onDisable() {
+        this.configs.clear();
+    }
+
+    @Override
     public File getFolder() {
         return plugin.getDataFolder();
     }

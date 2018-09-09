@@ -6,6 +6,11 @@ import java.nio.charset.Charset;
 public interface SimpleConfigManager {
 
     /**
+     * Method called when it's needed to disable the plugin. (Often on reloads).
+     */
+    void onDisable();
+
+    /**
      * Scans given file for tabs, very useful when loading YAML configuration.
      * Any configuration loaded using the API in this class is automatically scanned.
      * Please note that this only works for files within the plugin folder of plugin
