@@ -81,7 +81,8 @@ public class SpigotSection implements Section {
 
     @Override
     public Section getSection(String path) {
-        return new SpigotSection(this.section.getConfigurationSection(path));
+        ConfigurationSection configurationSection = this.section.getConfigurationSection(path);
+        return configurationSection == null ? null : new SpigotSection(configurationSection);
     }
 
     @Override

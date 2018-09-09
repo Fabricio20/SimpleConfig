@@ -82,7 +82,8 @@ public class BungeeSection implements Section {
 
     @Override
     public Section getSection(String path) {
-        return new BungeeSection(this.section.getSection(path));
+        Configuration configurationSection = this.section.getSection(path);
+        return configurationSection == null ? null : new BungeeSection(configurationSection);
     }
 
     @Override

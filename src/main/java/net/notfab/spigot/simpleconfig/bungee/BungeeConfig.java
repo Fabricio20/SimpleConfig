@@ -113,7 +113,8 @@ public class BungeeConfig implements SimpleConfig {
 
     @Override
     public Section getSection(String path) {
-        return new BungeeSection(this.config.getSection(path));
+        Configuration configurationSection = this.config.getSection(path);
+        return configurationSection == null ? null : new BungeeSection(configurationSection);
     }
 
     @Override

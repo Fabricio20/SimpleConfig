@@ -3,6 +3,7 @@ package net.notfab.spigot.simpleconfig.spigot;
 import net.notfab.spigot.simpleconfig.Section;
 import net.notfab.spigot.simpleconfig.SimpleConfig;
 import net.notfab.spigot.simpleconfig.SimpleConfigManager;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -111,7 +112,8 @@ public class SpigotConfig implements SimpleConfig {
 
     @Override
     public Section getSection(String path) {
-        return new SpigotSection(this.config.getConfigurationSection(path));
+        ConfigurationSection configurationSection = this.config.getConfigurationSection(path);
+        return configurationSection == null ? null : new SpigotSection(configurationSection);
     }
 
     @Override
