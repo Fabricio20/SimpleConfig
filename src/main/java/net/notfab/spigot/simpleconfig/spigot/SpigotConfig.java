@@ -40,6 +40,11 @@ public class SpigotConfig implements SimpleConfig {
     }
 
     @Override
+    public File getFile() {
+        return this.file;
+    }
+
+    @Override
     public Object get(String path) {
         return this.config.get(path);
     }

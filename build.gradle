@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'net.notfab.spigot'
-version '1.3'
+version '1.3.1'
 description 'SimpleConfig Library'
 
 sourceCompatibility = targetCompatibility = 1.8

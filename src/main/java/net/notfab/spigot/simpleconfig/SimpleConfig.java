@@ -1,5 +1,7 @@
 package net.notfab.spigot.simpleconfig;
 
+import java.io.File;
+
 public interface SimpleConfig extends Section {
 
     /**
@@ -8,6 +10,13 @@ public interface SimpleConfig extends Section {
      * @return - name of the config file.
      */
     String getName();
+
+    /**
+     * Get the file of this config.
+     *
+     * @return - the file.
+     */
+    File getFile();
 
     /**
      * Defines a value in the configuration.
