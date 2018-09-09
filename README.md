@@ -58,7 +58,7 @@ public class Example extends JavaPlugin {
 
 BungeeCord:
 ```java
-public class Example extends JavaPlugin {
+public class Example extends Plugin {
     
     private SimpleConfigManager simpleConfigManager;
     
