@@ -9,6 +9,7 @@ import net.notfab.spigot.simpleconfig.SimpleConfigManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -75,6 +76,11 @@ public class BungeeConfigManager implements SimpleConfigManager {
         ProxyServer.getInstance().getPluginManager().callEvent(new ConfigLoadEvent((BungeeConfig) config));
         this.configs.put(filePath, config);
         return config;
+    }
+
+    @Override
+    public SimpleConfig getFromResources(InputStream inputStream, File file) {
+        return new BungeeConfig(inputStream, file, this.getCommentsNum(inputStream), this);
     }
 
     @Override

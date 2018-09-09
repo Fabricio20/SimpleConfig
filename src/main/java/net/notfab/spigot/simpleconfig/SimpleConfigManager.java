@@ -39,6 +39,15 @@ public interface SimpleConfigManager {
     }
 
     /**
+     * Load a configuration from an InputStream. Useful when comparing the default
+     * with the one on-disk.
+     *
+     * @param inputStream - The resource InputStream
+     * @param file - The location where this config would stay at
+     */
+    SimpleConfig getFromResources(InputStream inputStream, File file);
+
+    /**
      * Get configuration file from string
      *
      * @param file - File path
@@ -174,6 +183,31 @@ public interface SimpleConfigManager {
             int comments = 0;
             String currentLine;
             BufferedReader reader = new BufferedReader(new FileReader(file));
+            while ((currentLine = reader.readLine()) != null) {
+                if (currentLine.startsWith("#")) {
+                    comments++;
+                }
+            }
+            reader.close();
+            return comments;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Get comments from InputStream
+     *
+     * @param stream - InputStream
+     * @return - Comments number
+     */
+    default int getCommentsNum(InputStream stream) {
+        if (stream == null) return 0;
+        try {
+            int comments = 0;
+            String currentLine;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.startsWith("#")) {
                     comments++;

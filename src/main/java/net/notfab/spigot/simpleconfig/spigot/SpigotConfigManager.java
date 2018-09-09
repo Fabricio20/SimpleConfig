@@ -76,6 +76,11 @@ public class SpigotConfigManager implements SimpleConfigManager {
     }
 
     @Override
+    public SimpleConfig getFromResources(InputStream inputStream, File file) {
+        return new SpigotConfig(inputStream, file, this.getCommentsNum(inputStream), this);
+    }
+
+    @Override
     public void prepareFile(String filePath, String resource) {
         File file = this.getConfigFile(filePath);
         if (file != null && file.exists()) return;

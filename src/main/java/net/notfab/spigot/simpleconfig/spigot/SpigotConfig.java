@@ -7,6 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,13 @@ public class SpigotConfig implements SimpleConfig {
         this.file = configFile;
         this.manager = manager;
         this.reload();
+    }
+
+    public SpigotConfig(InputStream inputStream, File configFile, int comments, SimpleConfigManager manager) {
+        this.comments = comments;
+        this.file = configFile;
+        this.manager = manager;
+        this.config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
     }
 
     @Override

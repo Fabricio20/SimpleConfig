@@ -9,7 +9,10 @@ import net.notfab.spigot.simpleconfig.SimpleConfigManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BungeeConfig implements SimpleConfig {
 
@@ -24,6 +27,13 @@ public class BungeeConfig implements SimpleConfig {
         this.file = configFile;
         this.manager = manager;
         this.reload();
+    }
+
+    public BungeeConfig(InputStream inputStream, File configFile, int comments, SimpleConfigManager manager) {
+        this.comments = comments;
+        this.file = configFile;
+        this.manager = manager;
+        this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(inputStream);
     }
 
     @Override
