@@ -3,10 +3,8 @@ package net.notfab.spigot;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -324,7 +322,6 @@ public class SimpleConfig {
         this.reloadConfig();
     }
 
-    @SuppressWarnings("deprecation")
     public void reloadConfig() {
         this.config = YamlConfiguration.loadConfiguration(file);
     }
@@ -332,7 +329,6 @@ public class SimpleConfig {
     public void saveConfig() {
         String config = this.config.saveToString();
         manager.saveConfig(config, this.file);
-
     }
 
     public Set<String> getKeys() {
