@@ -18,7 +18,7 @@ Maven:
 <dependency>
     <groupId>net.notfab.spigot</groupId>
     <artifactId>SimpleConfig</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 Gradle:
@@ -28,7 +28,7 @@ repositories {
 }
 ```
 ```bash
-compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: '1.1'
+compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: '1.2'
 ```
 
 ### Usage
