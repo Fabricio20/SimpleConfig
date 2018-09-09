@@ -38,7 +38,7 @@ public class Example extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        simpleConfigManager = new SimpleConfigManager(this);
+        simpleConfigManager = new SpigotConfigManager(this);
         // Load config file
         SimpleConfig config = simpleConfigManager.getNewConfig("config.yml");
         // get boolean
@@ -57,8 +57,30 @@ public class Example extends JavaPlugin {
 ```
 
 BungeeCord:
-
->Soon
+```java
+public class Example extends JavaPlugin {
+    
+    private SimpleConfigManager simpleConfigManager;
+    
+    @Override
+    public void onEnable() {
+        simpleConfigManager = new BungeeConfigManager(this);
+        // Load config file
+        SimpleConfig config = simpleConfigManager.getNewConfig("config.yml");
+        // get boolean
+        boolean b = config.getBoolean("some.path");
+        // get list of strings
+        List<String> strs = config.getStringList("some.other.path");
+        // set a value
+        config.set("some.string", "hello there");
+        // write to disk
+        config.saveConfig();
+        // reload from disk
+        config.reloadConfig();
+    }
+    
+}
+```
 
 ### Contributors
 

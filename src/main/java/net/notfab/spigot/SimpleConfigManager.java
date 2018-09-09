@@ -1,30 +1,9 @@
 package net.notfab.spigot;
 
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.*;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class SimpleConfigManager {
-
-    private JavaPlugin plugin;
-    private Map<String, SimpleConfig> configs;
-
-    /**
-     * Manage custom configurations and files
-     */
-    public SimpleConfigManager(JavaPlugin plugin) {
-        this.plugin = plugin;
-        this.configs = new HashMap<>();
-    }
-
-    public void onDisable() {
-        this.configs.clear();
-    }
+public interface SimpleConfigManager {
 
     /**
      * Scans given file for tabs, very useful when loading YAML configuration.
@@ -34,26 +13,7 @@ public class SimpleConfigManager {
      *
      * @param filePath Path of file
      */
-    public void scan(String filePath) {
-        File file = new File(plugin.getDataFolder(), filePath);
-        if (!file.exists()) return;
-        int lineNumber = 0;
-        String line;
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                line = scanner.nextLine();
-                lineNumber++;
-                if (line.contains("\t")) {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + " ------------------------------------------------------ ");
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Tab found in file \"" + filePath + "\" on line #" + lineNumber + "!");
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + " ------------------------------------------------------ ");
-                    throw new IllegalArgumentException("Tab found in file \"" + filePath + "\" on line # " + line + "!");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    void scan(String filePath);
 
     /**
      * Get new configuration with header
@@ -61,20 +21,7 @@ public class SimpleConfigManager {
      * @param filePath - Path to file
      * @return - New SimpleConfig
      */
-    public SimpleConfig getNewConfig(String filePath, String[] header) {
-        if (this.configs.containsKey(filePath)) return this.configs.get(filePath);
-        this.scan(filePath);
-        File file = this.getConfigFile(filePath);
-        if (file != null && !file.exists()) {
-            this.prepareFile(filePath);
-            if (header != null && header.length != 0) {
-                this.setHeader(file, header);
-            }
-        }
-        SimpleConfig config = new SimpleConfig(file, this.getCommentsNum(file), this);
-        this.configs.put(filePath, config);
-        return config;
-    }
+    SimpleConfig getNewConfig(String filePath, String[] header);
 
     /**
      * Get new configuration
@@ -82,7 +29,7 @@ public class SimpleConfigManager {
      * @param filePath - Path to file
      * @return - New SimpleConfig
      */
-    public SimpleConfig getNewConfig(String filePath) {
+    default SimpleConfig getNewConfig(String filePath) {
         return this.getNewConfig(filePath, null);
     }
 
@@ -92,21 +39,28 @@ public class SimpleConfigManager {
      * @param file - File path
      * @return - New file object
      */
-    private File getConfigFile(String file) {
+    default File getConfigFile(String file) {
         this.scan(file);
         if (file == null || file.isEmpty()) return null;
         File configFile;
         if (file.contains("/")) {
             if (file.startsWith("/")) {
-                configFile = new File(plugin.getDataFolder() + file.replace("/", File.separator));
+                configFile = new File(getFolder() + file.replace("/", File.separator));
             } else {
-                configFile = new File(plugin.getDataFolder() + File.separator + file.replace("/", File.separator));
+                configFile = new File(getFolder() + File.separator + file.replace("/", File.separator));
             }
         } else {
-            configFile = new File(plugin.getDataFolder(), file);
+            configFile = new File(getFolder(), file);
         }
         return configFile;
     }
+
+    /**
+     * Get the main plugin folder
+     *
+     * @return - File object for the plugin's folder.
+     */
+    File getFolder();
 
     /**
      * Create new file for config and copy resource into it
@@ -114,27 +68,14 @@ public class SimpleConfigManager {
      * @param filePath - Path to file
      * @param resource - Resource to copy
      */
-    public void prepareFile(String filePath, String resource) {
-        File file = this.getConfigFile(filePath);
-        if (file != null && file.exists()) return;
-        if (file == null) return;
-        try {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-            if (resource != null && !resource.isEmpty()) {
-                this.copyResource(plugin.getResource(resource), file);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    void prepareFile(String filePath, String resource);
 
     /**
      * Create new file for config without resource
      *
      * @param filePath - File to create
      */
-    public void prepareFile(String filePath) {
+    default void prepareFile(String filePath) {
         this.prepareFile(filePath, null);
     }
 
@@ -144,7 +85,7 @@ public class SimpleConfigManager {
      * @param file   - Config file
      * @param header - Header lines
      */
-    public void setHeader(File file, String[] header) {
+    default void setHeader(File file, String[] header) {
         if (!file.exists()) return;
         try {
             String currentLine;
@@ -188,7 +129,7 @@ public class SimpleConfigManager {
      * @param file - Path to file
      * @return - File as Input Stream
      */
-    public InputStream getConfigContent(File file) {
+    default InputStream getConfigContent(File file) {
         if (!file.exists()) return null;
         try {
             int commentNum = 0;
@@ -222,7 +163,7 @@ public class SimpleConfigManager {
      * @param file - File
      * @return - Comments number
      */
-    private int getCommentsNum(File file) {
+    default int getCommentsNum(File file) {
         if (file == null || !file.exists()) return 0;
         try {
             int comments = 0;
@@ -247,11 +188,17 @@ public class SimpleConfigManager {
      * @param filePath - Path to file
      * @return - readied file
      */
-    public InputStream getConfigContent(String filePath) {
+    default InputStream getConfigContent(String filePath) {
         return this.getConfigContent(this.getConfigFile(filePath));
     }
 
-    private String prepareConfigString(String configString) {
+    /**
+     * Prepares the config file for parsing with SnakeYAML.
+     *
+     * @param configString - The configuration as string.
+     * @return - ready-to-parse config.
+     */
+    default String prepareConfigString(String configString) {
         int lastLine = 0;
         int headerLine = 0;
         String[] lines = configString.split("\n");
@@ -285,7 +232,7 @@ public class SimpleConfigManager {
                     }
                     if (lastLine == 0) {
                         config.append(normalComment).append("\n");
-                    } else if (lastLine == 1) {
+                    } else {
                         config.append("\n").append(normalComment).append("\n");
                     }
                     lastLine = 0;
@@ -304,7 +251,7 @@ public class SimpleConfigManager {
      * @param configString - Config string
      * @param file         - Config file
      */
-    public void saveConfig(String configString, File file) {
+    default void saveConfig(String configString, File file) {
         String configuration = this.prepareConfigString(configString);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -316,9 +263,12 @@ public class SimpleConfigManager {
         }
     }
 
-    public String getPluginName() {
-        return plugin.getDescription().getName();
-    }
+    /**
+     * Gets the name of the plugin.
+     *
+     * @return - the name of the plugin.
+     */
+    String getPluginName();
 
     /**
      * Copy resource from Input Stream to file
@@ -326,7 +276,7 @@ public class SimpleConfigManager {
      * @param resource - Resource from .jar
      * @param file     - File to write
      */
-    private void copyResource(InputStream resource, File file) {
+    default void copyResource(InputStream resource, File file) {
         try {
             OutputStream out = new FileOutputStream(file);
             int lenght;
