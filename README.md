@@ -2,6 +2,8 @@
 
 SimpleConfig is a configuration library for SpigotMC that was made to help you develop your plugins quickly.
 
+Check versions here: https://maven.notfab.net/Hosted/net/notfab/spigot/SimpleConfig/
+
 ### Installation
 Maven:
 ```xml
@@ -16,7 +18,7 @@ Maven:
 <dependency>
     <groupId>net.notfab.spigot</groupId>
     <artifactId>SimpleConfig</artifactId>
-    <version></version>
+    <version>1.1</version>
 </dependency>
 ```
 Gradle:
@@ -26,7 +28,7 @@ repositories {
 }
 ```
 ```bash
-compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: ''
+compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: '1.1'
 ```
 
 ### Usage
