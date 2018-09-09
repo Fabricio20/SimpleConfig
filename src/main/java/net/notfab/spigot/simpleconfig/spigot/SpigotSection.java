@@ -1,9 +1,8 @@
-package net.notfab.spigot.spigot;
+package net.notfab.spigot.simpleconfig.spigot;
 
-import net.notfab.spigot.Section;
+import net.notfab.spigot.simpleconfig.Section;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

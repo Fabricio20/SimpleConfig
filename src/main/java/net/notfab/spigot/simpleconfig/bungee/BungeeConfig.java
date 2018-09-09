@@ -1,26 +1,25 @@
-package net.notfab.spigot.spigot;
+package net.notfab.spigot.simpleconfig.bungee;
 
-import net.notfab.spigot.Section;
-import net.notfab.spigot.SimpleConfig;
-import net.notfab.spigot.SimpleConfigManager;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
+import net.notfab.spigot.simpleconfig.Section;
+import net.notfab.spigot.simpleconfig.SimpleConfig;
+import net.notfab.spigot.simpleconfig.SimpleConfigManager;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
-public class SpigotConfig implements SimpleConfig {
+public class BungeeConfig implements SimpleConfig {
 
     private int comments;
-    private final SimpleConfigManager manager;
+    private SimpleConfigManager manager;
 
     private File file;
-    private FileConfiguration config;
+    private Configuration config;
 
-    public SpigotConfig(File configFile, int comments, SimpleConfigManager manager) {
+    public BungeeConfig(File configFile, int comments, SimpleConfigManager manager) {
         this.comments = comments;
         this.file = configFile;
         this.manager = manager;
@@ -94,12 +93,12 @@ public class SpigotConfig implements SimpleConfig {
 
     @Override
     public void createSection(String path) {
-        this.config.createSection(path);
+        //TODO: Implement section creation on bungeecord
     }
 
     @Override
     public Section getSection(String path) {
-        return new SpigotSection(this.config.getConfigurationSection(path));
+        return new BungeeSection(this.config.getSection(path));
     }
 
     @Override
@@ -137,18 +136,27 @@ public class SpigotConfig implements SimpleConfig {
 
     @Override
     public void reload() {
-        this.config = YamlConfiguration.loadConfiguration(file);
+        try {
+            this.config = ConfigurationProvider
+                    .getProvider(YamlConfiguration.class)
+                    .load(this.file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void save() {
-        String config = this.config.saveToString();
-        manager.saveConfig(config, this.file);
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class)
+                    .save(this.config, this.file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
     public Set<String> getKeys() {
-        return this.config.getKeys(false);
+        return new HashSet<>(this.config.getKeys());
     }
 
 }

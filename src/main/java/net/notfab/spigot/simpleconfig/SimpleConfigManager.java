@@ -1,4 +1,4 @@
-package net.notfab.spigot;
+package net.notfab.spigot.simpleconfig;
 
 import java.io.*;
 import java.nio.charset.Charset;

@@ -1,7 +1,7 @@
-package net.notfab.spigot.bungee;
+package net.notfab.spigot.simpleconfig.bungee;
 
 import net.md_5.bungee.config.Configuration;
-import net.notfab.spigot.Section;
+import net.notfab.spigot.simpleconfig.Section;
 
 import java.util.HashSet;
 import java.util.List;

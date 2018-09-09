@@ -1,12 +1,12 @@
-package net.notfab.spigot.bungee;
+package net.notfab.spigot.simpleconfig.bungee;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.notfab.spigot.SimpleConfig;
-import net.notfab.spigot.SimpleConfigManager;
-import net.notfab.spigot.spigot.SpigotConfig;
+import net.notfab.spigot.simpleconfig.SimpleConfig;
+import net.notfab.spigot.simpleconfig.SimpleConfigManager;
+import net.notfab.spigot.simpleconfig.spigot.SpigotConfig;
 
 import java.io.File;
 import java.io.IOException;

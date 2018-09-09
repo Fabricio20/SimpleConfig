@@ -1,4 +1,4 @@
-package net.notfab.spigot;
+package net.notfab.spigot.simpleconfig;
 
 public interface SimpleConfig extends Section {
 

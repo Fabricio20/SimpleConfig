@@ -1,7 +1,7 @@
-package net.notfab.spigot.spigot;
+package net.notfab.spigot.simpleconfig.spigot;
 
-import net.notfab.spigot.SimpleConfig;
-import net.notfab.spigot.SimpleConfigManager;
+import net.notfab.spigot.simpleconfig.SimpleConfig;
+import net.notfab.spigot.simpleconfig.SimpleConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;

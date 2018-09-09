@@ -1,4 +1,4 @@
-package net.notfab.spigot;
+package net.notfab.spigot.simpleconfig;
 
 import java.util.ArrayList;
 import java.util.List;
