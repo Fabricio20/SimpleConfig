@@ -70,6 +70,7 @@ public class SpigotConfigManager implements SimpleConfigManager {
             }
         }
         SimpleConfig config = new SpigotConfig(file, this.getCommentsNum(file), this);
+        Bukkit.getPluginManager().callEvent(new ConfigLoadEvent((SpigotConfig) config));
         this.configs.put(filePath, config);
         return config;
     }

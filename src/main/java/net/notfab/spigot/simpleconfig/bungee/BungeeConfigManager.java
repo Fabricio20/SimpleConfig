@@ -6,7 +6,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.notfab.spigot.simpleconfig.SimpleConfig;
 import net.notfab.spigot.simpleconfig.SimpleConfigManager;
-import net.notfab.spigot.simpleconfig.spigot.SpigotConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +71,8 @@ public class BungeeConfigManager implements SimpleConfigManager {
                 this.setHeader(file, header);
             }
         }
-        SimpleConfig config = new SpigotConfig(file, this.getCommentsNum(file), this);
+        SimpleConfig config = new BungeeConfig(file, this.getCommentsNum(file), this);
+        ProxyServer.getInstance().getPluginManager().callEvent(new ConfigLoadEvent((BungeeConfig) config));
         this.configs.put(filePath, config);
         return config;
     }
