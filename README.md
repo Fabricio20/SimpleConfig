@@ -6,7 +6,7 @@ Check versions here: https://maven.notfab.net/Hosted/net/notfab/spigot/SimpleCon
 
 ### Installation
 
-**Note**: Standalone configuration requires SnakeYAML > 1.23
+**Note**: Standalone configuration requires SnakeYAML >= 1.23
 
 Maven:
 ```xml
@@ -21,7 +21,7 @@ Maven:
 <dependency>
     <groupId>net.notfab.spigot</groupId>
     <artifactId>SimpleConfig</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ```
 Gradle:
@@ -31,7 +31,7 @@ repositories {
 }
 ```
 ```bash
-compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: '1.4.0'
+compile group: 'net.notfab.spigot', name: 'SimpleConfig', version: '1.4.1'
 ```
 
 ### Usage
