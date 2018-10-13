@@ -98,10 +98,10 @@ public class StandaloneSection implements Section {
         Map<String, Object> objectMap = this.section;
         for (String string : path.split("\\.")) {
             if (objectMap.containsKey(string)) {
-                objectMap = (Map<String, Object>) this.section.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             } else {
                 objectMap.put(string, new HashMap<String, Object>());
-                objectMap = (Map<String, Object>) this.section.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             }
         }
     }
@@ -111,7 +111,7 @@ public class StandaloneSection implements Section {
         Map<String, Object> objectMap = this.section;
         for (String string : path.split("\\.")) {
             if (objectMap.containsKey(string)) {
-                objectMap = (Map<String, Object>) this.section.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             } else {
                 return null;
             }
