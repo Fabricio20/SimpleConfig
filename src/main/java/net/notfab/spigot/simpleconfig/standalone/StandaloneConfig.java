@@ -136,10 +136,10 @@ public class StandaloneConfig implements SimpleConfig {
         Map<String, Object> objectMap = this.config;
         for (String string : path.split("\\.")) {
             if (objectMap.containsKey(string)) {
-                objectMap = (Map<String, Object>) this.config.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             } else {
                 objectMap.put(string, new HashMap<String, Object>());
-                objectMap = (Map<String, Object>) this.config.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             }
         }
     }
@@ -149,10 +149,9 @@ public class StandaloneConfig implements SimpleConfig {
         Map<String, Object> objectMap = this.config;
         for (String string : path.split("\\.")) {
             if (objectMap.containsKey(string)) {
-                objectMap = (Map<String, Object>) this.config.get(string);
+                objectMap = (Map<String, Object>) objectMap.get(string);
             } else {
-                objectMap.put(string, new HashMap<String, Object>());
-                objectMap = (Map<String, Object>) this.config.get(string);
+                return null;
             }
         }
         return objectMap == null ? null : new StandaloneSection(objectMap);
